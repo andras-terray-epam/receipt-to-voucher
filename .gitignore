@@ -1,7 +1,8 @@
 #ignore all intellij project related info
 .idea
 .gradle
-.barmi
+build/
+
 
 
 #we have to be sure that gradle-wrapper is on remote however all other jars are exluded 
