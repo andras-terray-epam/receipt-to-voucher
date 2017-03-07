@@ -1,0 +1,34 @@
+{
+	"id": "adb511ff-15d1-69cf-086c-b79fa4ba0a42",
+	"name": "ReceiptToVoucher",
+	"description": "",
+	"order": [
+		"8d23e959-95ce-979c-9591-a0527992e1f3"
+	],
+	"folders": [],
+	"timestamp": 1488905361626,
+	"owner": 0,
+	"public": false,
+	"requests": [
+		{
+			"id": "8d23e959-95ce-979c-9591-a0527992e1f3",
+			"headers": "",
+			"url": "http://localhost:9000/hello-world?name=Bandi",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "adb511ff-15d1-69cf-086c-b79fa4ba0a42",
+			"data": null,
+			"dataMode": "params",
+			"name": "Hello World",
+			"description": "Hello World",
+			"descriptionFormat": "html",
+			"time": 1488905424912,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}
