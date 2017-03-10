@@ -1,5 +1,7 @@
 package hu.terray.receipttovoucher.user.registration.service;
 
+import javax.inject.Singleton;
+
 import com.google.inject.Inject;
 
 import hu.terray.receipttovoucher.user.registration.dao.MongoRegistrationDao;
@@ -8,6 +10,7 @@ import hu.terray.receipttovoucher.user.registration.resource.domain.Registration
 /**
  * Registration service.
  */
+@Singleton
 public class RegistrationService {
 
     private MongoRegistrationDao mongoRegistrationDao;

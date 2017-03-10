@@ -1,41 +1,49 @@
 package hu.terray.receipttovoucher.user.registration.dao;
 
+import javax.inject.Singleton;
+
 import org.mongojack.JacksonDBCollection;
 import org.mongojack.WriteResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
+import com.google.inject.Inject;
 
+import hu.terray.receipttovoucher.common.mongo.DefaultCollectionProvider;
+import hu.terray.receipttovoucher.common.mongo.Repository;
 import hu.terray.receipttovoucher.user.registration.dao.domain.User;
+import hu.terray.receipttovoucher.user.registration.dao.transformer.UserTransformer;
 import hu.terray.receipttovoucher.user.registration.resource.domain.RegistrationRequest;
 
 /**
  * Mongo db version of registration dao.
  */
-public class MongoRegistrationDao {
+@Singleton
+public class MongoRegistrationDao implements Repository<User, String> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MongoRegistrationDao.class);
+    private static final String USER_COLLECTION_NAME = "user";
 
-    public boolean register(RegistrationRequest registrationRequest){
-        MongoClient client = new MongoClient("localhost",27017);
-        DB db = client.getDB("receipt-to-voucher");
-        DBCollection collection = db.getCollection("user");
+    private final DefaultCollectionProvider collectionProvider;
+    private final UserTransformer userTransformer;
 
-        JacksonDBCollection<User, String> coll = JacksonDBCollection.wrap(collection, User.class, String.class);
+    private JacksonDBCollection<User, String> userCollection;
+
+    @Inject
+    public MongoRegistrationDao(final DefaultCollectionProvider collectionProvider, final UserTransformer userTransformer) {
+        this.collectionProvider = collectionProvider;
+        this.userTransformer = userTransformer;
+    }
+
+    @Override
+    public void start() {
+        userCollection = collectionProvider.getWrappedCollection(USER_COLLECTION_NAME, User.class, String.class);
+    }
+
+    public boolean register(RegistrationRequest registrationRequest) {
+
         ObjectMapper om = new ObjectMapper();
-        User userToInsert = new User();
-        userToInsert.setEmailAddress(registrationRequest.getEmailAddress());
-        userToInsert.setFirstName(registrationRequest.getFirstName());
-        userToInsert.setLastName(registrationRequest.getLastName());
-        userToInsert.setPassword(registrationRequest.getPassword());
+        User userToInsert = userTransformer.transform(registrationRequest);
 
-        WriteResult<User, String> result = coll.insert(userToInsert);
-
-        client.close();
+        WriteResult<User, String> result = userCollection.insert(userToInsert);
 
         return true;
     }
