@@ -1,15 +1,5 @@
 package hu.terray.receipttovoucher.common.mongo;
 
-import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
-
-import java.math.BigDecimal;
-
-import javax.inject.Singleton;
-
-import org.mongojack.JacksonDBCollection;
-import org.mongojack.internal.MongoJackModule;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
@@ -17,9 +7,17 @@ import com.google.inject.Inject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
+import org.mongojack.JacksonDBCollection;
+import org.mongojack.internal.MongoJackModule;
+
+import javax.inject.Singleton;
+import java.math.BigDecimal;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 @Singleton
-public class DefaultCollectionProvider{
+public class DefaultCollectionProvider {
     private final MongoClientProvider mongoClientProvider;
     private DB database;
 

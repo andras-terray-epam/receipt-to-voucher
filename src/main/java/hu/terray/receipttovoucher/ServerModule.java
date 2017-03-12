@@ -1,18 +1,27 @@
 package hu.terray.receipttovoucher;
 
-import com.google.inject.Binder;
-import com.google.inject.Module;
+import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import hu.terray.receipttovoucher.common.uuid.DefaultUUIDGenerator;
+import hu.terray.receipttovoucher.common.uuid.UUIDGenerator;
+import hu.terray.receipttovoucher.user.details.dao.MongoUserDetailsDao;
+import hu.terray.receipttovoucher.user.details.dao.UserDetailsDao;
+import hu.terray.receipttovoucher.user.registration.dao.MongoRegistrationDao;
+import hu.terray.receipttovoucher.user.registration.dao.RegistrationDao;
 
 import javax.inject.Named;
 
 
 /**
- * Created by andrasterray on 2/4/17.
+ * {@link com.google.inject.Module} implementation for binding interfaces to related classes.
  */
-public class ServerModule implements Module {
+public class ServerModule extends AbstractModule {
+
     @Override
-    public void configure(Binder binder) {
+    protected void configure() {
+        bind(UUIDGenerator.class).to(DefaultUUIDGenerator.class);
+        bind(UserDetailsDao.class).to(MongoUserDetailsDao.class);
+        bind(RegistrationDao.class).to(MongoRegistrationDao.class);
     }
 
     @Provides

@@ -3,6 +3,7 @@ package hu.terray.receipttovoucher;
 /**
  * Created by andrasterray on 2/4/17.
  */
+
 import com.codahale.metrics.health.HealthCheck;
 
 public class TemplateHealthCheck extends HealthCheck {

@@ -21,7 +21,7 @@ import javax.inject.Singleton;
  * Mongo db version of registration dao.
  */
 @Singleton
-public class MongoRegistrationDao implements Repository<User, String> {
+public class MongoRegistrationDao implements Repository<User, String>, RegistrationDao {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MongoRegistrationDao.class);
 
@@ -43,6 +43,7 @@ public class MongoRegistrationDao implements Repository<User, String> {
         userCollection = collectionProvider.getWrappedCollection(USER_COLLECTION_NAME, User.class, String.class);
     }
 
+    @Override
     public RegistrationResponse register(RegistrationRequest registrationRequest) {
 
         ObjectMapper om = new ObjectMapper();

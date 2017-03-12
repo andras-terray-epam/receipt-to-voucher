@@ -1,12 +1,11 @@
 package hu.terray.receipttovoucher.common.mongo;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
+import com.mongodb.MongoClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mongodb.MongoClient;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @Singleton
 public class MongoClientProvider {

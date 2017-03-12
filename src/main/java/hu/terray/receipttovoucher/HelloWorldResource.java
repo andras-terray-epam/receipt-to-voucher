@@ -3,9 +3,9 @@ package hu.terray.receipttovoucher;
 /**
  * Created by andrasterray on 2/4/17.
  */
+
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
-
 
 import javax.inject.Named;
 import javax.ws.rs.GET;
