@@ -11,10 +11,16 @@ Admin UI can be reached from browser on port 9000. Example: localhost:9001
 
 ### Prerequisites
 
-To start the project you do not need any prerequisites as the built in gradle wrapper (gradlew) will download them at first run.
+The only prerequisite is an installed mongoDB as the built in gradle wrapper (gradlew) will download the ohers at first run.
 
+### Initialize mongoDB
 
-### Installing
+Run mongo db server and run "src/main/resources/mongoInit/mongoInit.js" with mongo shell.
+```
+mongo < mongoInit.js
+```
+
+### Installing and running application
 
 Clone and call "gradlew clean run" in the root repository.
 
