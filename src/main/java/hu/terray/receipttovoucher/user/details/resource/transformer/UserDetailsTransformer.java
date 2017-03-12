@@ -10,6 +10,12 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class UserDetailsTransformer {
+    /**
+     * Transform {@link User} to {@link UserDetails}.
+     *
+     * @param user {@link User}.
+     * @return {@link UserDetails}.
+     */
     public UserDetails transform(User user) {
         UserDetails userDetails = new UserDetails();
         userDetails.setUserId(user.getUserId());

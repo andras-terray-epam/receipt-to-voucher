@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * Mongo db client provider.
+ */
 @Singleton
 public class MongoClientProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(MongoClientProvider.class);
@@ -20,11 +23,21 @@ public class MongoClientProvider {
 
     private final Object mcLock = new Object();
 
+    /**
+     * Constructor with necessary dependencies.
+     *
+     * @param factory dependency.
+     */
     @Inject
     public MongoClientProvider(final MongoClientFactory factory) {
         this.factory = factory;
     }
 
+    /**
+     * Creating mongo client if does not exist already.
+     *
+     * @return mongo client.
+     */
     public MongoClient getMongoClient() {
         if (mongoClient == null) {
             synchronized (mcLock) {
@@ -34,6 +47,9 @@ public class MongoClientProvider {
         return mongoClient;
     }
 
+    /**
+     * Initiating mongo client at application start.
+     */
     public void start() {
         if (mongoClient == null) {
             mongoClient = initMongo();
@@ -59,6 +75,9 @@ public class MongoClientProvider {
         return client;
     }
 
+    /**
+     * Closing client at application closing.
+     */
     public void stop() {
         mongoClient.close();
     }

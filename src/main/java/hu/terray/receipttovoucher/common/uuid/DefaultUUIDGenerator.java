@@ -4,7 +4,7 @@ import javax.inject.Singleton;
 import java.util.UUID;
 
 /**
- * {@inheritDoc}
+ * {@inheritDoc}.
  */
 @Singleton
 public class DefaultUUIDGenerator implements UUIDGenerator {

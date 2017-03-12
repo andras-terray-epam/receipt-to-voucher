@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+        "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+<suppressions>
+    <suppress
+            checks="JavadocMethod|JavadocType|IllegalImport|IllegalInstantiation|IllegalThrows|MagicNumber|ClassFanOutComplexity|ClassDataAbstractionCoupling|FileLength"
+            files=".*Mock.*java|.*Test.java|.*IT.java|.*.txt|.*.feature|.*json|.*xml"/>
+    <suppress checks="IllegalImport" files=".*QueryMatcher\.java"/>
+    <!-- relax rules in package info files, they are not real classes -->
+    <suppress checks="RegexpHeader" files=".*package-info.java|.*conf|.*xml|routes|.*.txt|.*.feature|.*js"/>
+    <suppress checks="[a-zA-Z0-9]*" files=".*.txt|.*keystore|.*json|.*log|.*.feature"/>
+    <suppress checks="[a-zA-Z0-9]*" files="target[\\/]"/>
+    <suppress checks="[a-zA-Z0-9]*" files="acceptance-tests[\\/]"/>
+    <suppress checks="MethodCount"
+              files="(ResponseResult|EnquiryResultsResponse|EnergyAPIReQuoteResultsResponse|EnergyAPIGetEnquiryResponse)\.java"/>
+    <suppress checks="FileLength"
+              files="(ResponseResult|EnquiryResultsResponse|EnergyAPIReQuoteResultsResponse|EnergyAPIGetEnquiryResponse)\.java"/>
+    <suppress checks="IllegalInstantiation" files="EventConsumerClient\.java"/>
+</suppressions>

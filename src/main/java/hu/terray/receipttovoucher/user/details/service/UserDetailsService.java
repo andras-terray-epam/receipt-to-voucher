@@ -13,11 +13,22 @@ import javax.inject.Singleton;
 public class UserDetailsService {
     private UserDetailsDao userDetailsDao;
 
+    /**
+     * Constructor with necessary dependencies.
+     *
+     * @param userDetailsDao dependency.
+     */
     @Inject
     public UserDetailsService(UserDetailsDao userDetailsDao) {
         this.userDetailsDao = userDetailsDao;
     }
 
+    /**
+     * Get user based on its id.
+     *
+     * @param userId id of the user.
+     * @return User related to the id.
+     */
     public User getUserDetailsById(String userId) {
         return userDetailsDao.getUserDetailsById(userId);
     }

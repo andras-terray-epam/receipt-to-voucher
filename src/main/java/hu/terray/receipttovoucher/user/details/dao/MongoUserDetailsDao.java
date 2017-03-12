@@ -1,7 +1,7 @@
 package hu.terray.receipttovoucher.user.details.dao;
 
 import com.google.inject.Inject;
-import hu.terray.receipttovoucher.common.mongo.DefaultCollectionProvider;
+import hu.terray.receipttovoucher.common.mongo.MongoDBCollectionProvider;
 import hu.terray.receipttovoucher.common.mongo.Repository;
 import hu.terray.receipttovoucher.user.registration.dao.domain.User;
 import org.mongojack.DBQuery;
@@ -21,12 +21,17 @@ public class MongoUserDetailsDao implements Repository<User, String>, UserDetail
 
     private static final String USER_COLLECTION_NAME = "user";
 
-    private final DefaultCollectionProvider collectionProvider;
+    private final MongoDBCollectionProvider collectionProvider;
 
     private JacksonDBCollection<User, String> userCollection;
 
+    /**
+     * Constructor with necessary dependencies.
+     *
+     * @param collectionProvider dependency.
+     */
     @Inject
-    public MongoUserDetailsDao(final DefaultCollectionProvider collectionProvider) {
+    public MongoUserDetailsDao(final MongoDBCollectionProvider collectionProvider) {
         this.collectionProvider = collectionProvider;
     }
 

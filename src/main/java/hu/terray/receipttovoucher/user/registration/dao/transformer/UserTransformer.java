@@ -15,11 +15,22 @@ public class UserTransformer {
 
     private UUIDGenerator uuidGenerator;
 
+    /**
+     * Constructor with necessary dependencies.
+     *
+     * @param uuidGenerator dependency.
+     */
     @Inject
     public UserTransformer(UUIDGenerator uuidGenerator) {
         this.uuidGenerator = uuidGenerator;
     }
 
+    /**
+     * Transform registration request to User dao.
+     *
+     * @param registrationRequest Registration information.
+     * @return Id of the created user.
+     */
     public User transform(RegistrationRequest registrationRequest) {
         User userToInsert = new User();
         userToInsert.setUserId(uuidGenerator.createRandomUUID());

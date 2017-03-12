@@ -12,7 +12,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -21,19 +20,32 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
  * Accepts registration requests.
  */
 @Path("/api/v1/users")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(APPLICATION_JSON)
 public class UserDetailsResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailsResource.class);
 
     private final UserDetailsService userDetailsService;
     private final UserDetailsTransformer userDetailsTransformer;
 
+    /**
+     * Constructor with necessary dependencies.
+     *
+     * @param userDetailsService     dependency.
+     * @param userDetailsTransformer dependency.
+     */
     @Inject
-    public UserDetailsResource(final UserDetailsService userDetailsService, final UserDetailsTransformer userDetailsTransformer) {
+    public UserDetailsResource(final UserDetailsService userDetailsService,
+            final UserDetailsTransformer userDetailsTransformer) {
         this.userDetailsService = userDetailsService;
         this.userDetailsTransformer = userDetailsTransformer;
     }
 
+    /**
+     * Get user by user id endpoint.
+     *
+     * @param userId id of the seached user.
+     * @return User with the related id.
+     */
     @GET
     @Path("/{userId}")
     @Produces(APPLICATION_JSON)
@@ -43,6 +55,5 @@ public class UserDetailsResource {
         UserDetails userDetails = userDetailsTransformer.transform(user);
         return Response.ok().entity(userDetails).build();
     }
-
 
 }
