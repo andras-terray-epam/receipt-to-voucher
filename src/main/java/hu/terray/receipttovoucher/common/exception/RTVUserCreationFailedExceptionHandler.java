@@ -10,7 +10,6 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class RTVUserCreationFailedExceptionHandler implements ExceptionMapper<RTVUserCreationFailedException> {
 
-
     @Override
     public Response toResponse(RTVUserCreationFailedException exception) {
         return Response.status(Response.Status.BAD_REQUEST).entity(exception.getMessage()).build();

@@ -11,9 +11,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -23,17 +21,29 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
  * Accepts registration requests.
  */
 @Path("/api/v1/registration")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(APPLICATION_JSON)
 public class RegistrationResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationResource.class);
 
     private RegistrationService registrationService;
 
+    /**
+     * Constructor with necessary dependencies.
+     *
+     * @param registrationService dependency.
+     */
     @Inject
     public RegistrationResource(RegistrationService registrationService) {
         this.registrationService = registrationService;
     }
 
+    /**
+     * User registration POST endpoint.
+     *
+     * @param registrationRequest user registration request details.
+     * @return id of the created user.
+     * @throws URISyntaxException syntax exception.
+     */
     @POST
     @Consumes(APPLICATION_JSON)
     @Produces(APPLICATION_JSON)
@@ -42,6 +52,5 @@ public class RegistrationResource {
         RegistrationResponse registrationResponse = registrationService.register(registrationRequest);
         return Response.created(new URI("/api/v1/users/me")).entity(registrationResponse).build();
     }
-
 
 }

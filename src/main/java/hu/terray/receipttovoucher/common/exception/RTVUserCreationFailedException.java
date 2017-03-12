@@ -7,8 +7,12 @@ import java.io.Serializable;
  */
 public class RTVUserCreationFailedException extends RuntimeException implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    /**
+     * Message and cause exception are mandatory fields.
+     *
+     * @param message Exception message.
+     * @param cause   Cause exception.
+     */
     public RTVUserCreationFailedException(String message, Throwable cause) {
         super(message, cause);
     }
