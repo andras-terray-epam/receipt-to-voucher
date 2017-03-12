@@ -1,6 +1,11 @@
 package hu.terray.receipttovoucher.user.registration.resource;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import com.google.inject.Inject;
+import hu.terray.receipttovoucher.user.registration.resource.domain.RegistrationRequest;
+import hu.terray.receipttovoucher.user.registration.resource.domain.RegistrationResponse;
+import hu.terray.receipttovoucher.user.registration.service.RegistrationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -9,13 +14,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import com.google.inject.Inject;
-
-import hu.terray.receipttovoucher.user.registration.resource.domain.RegistrationRequest;
-import hu.terray.receipttovoucher.user.registration.service.RegistrationService;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 /**
  * Accepts registration requests.
@@ -34,13 +36,11 @@ public class RegistrationResource {
 
     @POST
     @Consumes(APPLICATION_JSON)
-    public Response retrieveClubs(RegistrationRequest registrationRequest) {
-        LOGGER.error("Getting reg request");
-        if(registrationService.register(registrationRequest)){
-            return Response.ok().build();
-        } else {
-            return Response.serverError().build();
-        }
+    @Produces(APPLICATION_JSON)
+    public Response retrieveClubs(RegistrationRequest registrationRequest) throws URISyntaxException {
+        LOGGER.info("Getting reg request");
+        RegistrationResponse registrationResponse = registrationService.register(registrationRequest);
+        return Response.created(new URI("/api/v1/users/me")).entity(registrationResponse).build();
     }
 
 

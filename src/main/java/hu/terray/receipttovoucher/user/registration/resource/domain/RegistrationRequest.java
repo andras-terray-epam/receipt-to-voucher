@@ -6,7 +6,7 @@ package hu.terray.receipttovoucher.user.registration.resource.domain;
 public class RegistrationRequest {
     private String firstName;
     private String lastName;
-    private String emailAddress;
+    private String email;
     private String password;
 
     public String getFirstName() {
@@ -25,12 +25,12 @@ public class RegistrationRequest {
         this.lastName = lastName;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

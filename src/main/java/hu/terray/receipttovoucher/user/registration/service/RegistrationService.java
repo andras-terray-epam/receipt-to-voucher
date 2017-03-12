@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 
 import hu.terray.receipttovoucher.user.registration.dao.MongoRegistrationDao;
 import hu.terray.receipttovoucher.user.registration.resource.domain.RegistrationRequest;
+import hu.terray.receipttovoucher.user.registration.resource.domain.RegistrationResponse;
 
 /**
  * Registration service.
@@ -20,7 +21,7 @@ public class RegistrationService {
         this.mongoRegistrationDao = mongoRegistrationDao;
     }
 
-    public boolean register(RegistrationRequest registrationRequest){
+    public RegistrationResponse register(RegistrationRequest registrationRequest){
         return mongoRegistrationDao.register(registrationRequest);
     }
 }
