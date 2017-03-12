@@ -1,22 +1,18 @@
 package hu.terray.receipttovoucher;
 
-/**
- * Created by andrasterray on 2/4/17.
- */
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import org.hibernate.validator.constraints.NotEmpty;
 
+/**
+ * Configuration file for Receipt To Voucher application.
+ */
 public class AppConfiguration extends Configuration {
-    @NotEmpty
-    private String appName;
+    @NotEmpty private String appName;
 
-    @NotEmpty
-    private String template;
+    @NotEmpty private String template;
 
-    @NotEmpty
-    private String defaultName = "Stranger";
+    @NotEmpty private String defaultName = "Stranger";
 
     @JsonProperty
     public String getAppName() {

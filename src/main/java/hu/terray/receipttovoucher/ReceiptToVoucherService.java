@@ -14,35 +14,31 @@ public class ReceiptToVoucherService extends Application<AppConfiguration> {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(ReceiptToVoucherService.class);
 
-    @Override
-    public void initialize(Bootstrap<AppConfiguration> bootstrap) {
-        GuiceBundle<AppConfiguration> guiceBundle = GuiceBundle.<AppConfiguration>newBuilder()
-                .addModule(new ServerModule())
-                .setConfigClass(AppConfiguration.class)
-                .enableAutoConfig(getClass().getPackage().getName())
-                .build();
-        bootstrap.addBundle(guiceBundle);
-    }
-
+    /**
+     * Entry point of the Receipt to voucher application.
+     *
+     * @param args application arguments.
+     * @throws Exception exceptions can be thrown.
+     */
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public static void main(final String[] args) throws Exception {
         new ReceiptToVoucherService().run(args);
     }
+    //CHECKSTYLE:ON
 
     @Override
-    public void run(final AppConfiguration configuration, final Environment environment) throws Exception {
-        /*LOGGER.info("Application name: {}", configuration.getAppName());
-
-        //Adding real resource
-        final HelloWorldResource resource = new HelloWorldResource(
-                configuration.getTemplate(),
-                configuration.getDefaultName()
-        );
-        environment.jersey().register(resource);
-
-        //adding healthcheck
-        final TemplateHealthCheck healthCheck =
-                new TemplateHealthCheck(configuration.getTemplate());
-        environment.healthChecks().register("template", healthCheck);
-        environment.jersey().register(resource);*/
+    public void initialize(Bootstrap<AppConfiguration> bootstrap) {
+        GuiceBundle<AppConfiguration> guiceBundle = GuiceBundle.<AppConfiguration>newBuilder()
+                .addModule(new ServerModule()).setConfigClass(AppConfiguration.class)
+                .enableAutoConfig(getClass().getPackage().getName()).build();
+        bootstrap.addBundle(guiceBundle);
     }
+
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
+    @Override
+    public void run(final AppConfiguration configuration, final Environment environment) throws Exception {
+    }
+    //CHECKSTYLE:ON
 }

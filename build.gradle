@@ -2,6 +2,9 @@ group 'hu.terray.andras.receipttovoucher'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'application'
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
 
 description = 'Receipt To Vaucher Service'
 mainClassName = 'hu.terray.receipttovoucher.ReceiptToVoucherService'
@@ -13,6 +16,7 @@ project.ext {
     dropwizardVersion = '1.0.6'
     guiceVersion = '4.1.0'
     dropwizardGuicePluginVersion = '1.0.0.2'
+    mongoJackVersion = '2.6.1'
 }
 
 
@@ -29,6 +33,7 @@ dependencies {
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
     compile group: 'com.hubspot.dropwizard', name: 'dropwizard-guice', version: dropwizardGuicePluginVersion
     compile group: 'com.google.inject', name: 'guice', version: guiceVersion
+    compile group: 'org.mongojack', name: 'mongojack', version: mongoJackVersion
 }
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
@@ -43,6 +48,23 @@ task fatJar(type: Jar) {
     }
     with jar
 }
+
+checkstyle {
+    configFile = file("${rootDir}/env/checkstyle/checkstyle.xml")
+    configProperties = [samedir: "${rootDir}/env/checkstyle"]
+    toolVersion = '6.10.1'
+    ignoreFailures = false
+}
+
+pmd {
+    ruleSetFiles = files("${rootDir}/env/pmd/pmd_ruleset.xml")
+    toolVersion = '5.3.4'
+    ignoreFailures = false
+}
+
+findbugs.ignoreFailures = false
+
+[checkstyleTest, pmdTest, findbugsTest]*.enabled = false
 
 run {
     args 'server', configPath + 'app_config.yml'
