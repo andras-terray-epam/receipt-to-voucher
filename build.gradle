@@ -13,6 +13,7 @@ project.ext {
     dropwizardVersion = '1.0.6'
     guiceVersion = '4.1.0'
     dropwizardGuicePluginVersion = '1.0.0.2'
+    mongoJackVersion = '2.6.1'
 }
 
 
@@ -29,6 +30,7 @@ dependencies {
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
     compile group: 'com.hubspot.dropwizard', name: 'dropwizard-guice', version: dropwizardGuicePluginVersion
     compile group: 'com.google.inject', name: 'guice', version: guiceVersion
+    compile group: 'org.mongojack', name: 'mongojack', version: mongoJackVersion
 }
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'

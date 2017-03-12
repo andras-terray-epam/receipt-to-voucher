@@ -5,9 +5,17 @@ template: Hello, %s!
 defaultName: Stranger
 
 server:
-  applicationConnectors:
-  - type: http
+  type: simple
+  applicationContextPath: /
+  registerDefaultExceptionMappers: false
+  connector:
+    type: https
     port: 9000
-  adminConnectors:
-  - type: http
-    port: 9001
+    keyStorePath:  src/dist/keystore/sce.keystore
+    keyStorePassword: example
+    keyStoreType: JKS
+    trustStorePath: src/dist/keystore/trusts.keystore
+    trustStorePassword: changeit
+    trustStoreType: JKS
+    validateCerts: false
+    certAlias: localhost
