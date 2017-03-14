@@ -1,9 +1,12 @@
 package hu.terray.receipttovoucher.user.registration.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-
+import com.mongodb.DuplicateKeyException;
+import hu.terray.receipttovoucher.common.exception.system.badrequest.RTVUserCreationFailedException;
+import hu.terray.receipttovoucher.common.mongo.MongoDBCollectionProvider;
+import hu.terray.receipttovoucher.user.registration.dao.domain.User;
+import hu.terray.receipttovoucher.user.registration.dao.transformer.UserTransformer;
+import hu.terray.receipttovoucher.user.registration.resource.domain.RegistrationRequest;
+import hu.terray.receipttovoucher.user.registration.resource.domain.RegistrationResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,14 +15,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mongojack.JacksonDBCollection;
 
-import com.mongodb.DuplicateKeyException;
-
-import hu.terray.receipttovoucher.common.exception.system.badrequest.RTVUserCreationFailedException;
-import hu.terray.receipttovoucher.common.mongo.MongoDBCollectionProvider;
-import hu.terray.receipttovoucher.user.registration.dao.domain.User;
-import hu.terray.receipttovoucher.user.registration.dao.transformer.UserTransformer;
-import hu.terray.receipttovoucher.user.registration.resource.domain.RegistrationRequest;
-import hu.terray.receipttovoucher.user.registration.resource.domain.RegistrationResponse;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 /**
  * Test for {@link MongoRegistrationDao}
