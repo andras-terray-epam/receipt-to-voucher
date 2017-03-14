@@ -1,11 +1,9 @@
-package hu.terray.receipttovoucher.common.exception;
-
-import java.io.Serializable;
+package hu.terray.receipttovoucher.common.exception.system.badrequest;
 
 /**
  * Custom exception to throw when user creation is not successful.
  */
-public class RTVUserCreationFailedException extends RuntimeException implements Serializable {
+public class RTVUserCreationFailedException extends BadRequestException {
 
     /**
      * Message and cause exception are mandatory fields.
