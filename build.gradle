@@ -66,3 +66,11 @@ findbugs.ignoreFailures = false
 run {
     args 'server', configPath + 'app_config.yml'
 }
+
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+}
