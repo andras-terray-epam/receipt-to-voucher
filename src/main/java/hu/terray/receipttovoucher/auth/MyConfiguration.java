@@ -1,14 +1,12 @@
-package hu.terray.receipttovoucher;
+package hu.terray.receipttovoucher.auth;
 
 import io.dropwizard.Configuration;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.io.UnsupportedEncodingException;
 
-/**
- * Configuration file for Receipt To Voucher application.
- */
-public class AppConfiguration extends Configuration {
+public class MyConfiguration extends Configuration {
+
     @NotEmpty
     private String jwtTokenSecret = "dfwzsdzwh823zebdwdz772632gdsbd";
 

@@ -1,8 +1,6 @@
-package hu.terray.receipttovoucher;
+package hu.terray.receipttovoucher.auth;
 
 import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
-import com.hubspot.dropwizard.guice.GuiceBundle;
-import hu.terray.receipttovoucher.auth.MyUser;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
@@ -15,8 +13,6 @@ import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.jwt.consumer.JwtContext;
 import org.jose4j.keys.HmacKey;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -24,38 +20,19 @@ import java.util.Optional;
 import static java.math.BigDecimal.ONE;
 
 /**
- * Created by andrasterray on 2/4/17.
+ * A sample dropwizard application that shows how to set up the JWT Authentication provider.
+ * <p/>
+ * The Authentication Provider will parse the tokens supplied in the "Authorization" HTTP header in each HTTP request
+ * given your resource is protected with the @Auth annotation.
  */
-public class ReceiptToVoucherService extends Application<AppConfiguration> {
-
-    public static final Logger LOGGER = LoggerFactory.getLogger(ReceiptToVoucherService.class);
-
-    /**
-     * Entry point of the Receipt to voucher application.
-     *
-     * @param args application arguments.
-     * @throws Exception exceptions can be thrown.
-     */
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
-    public static void main(final String[] args) throws Exception {
-        new ReceiptToVoucherService().run(args);
-    }
-    //CHECKSTYLE:ON
+public class JwtAuthApplication extends Application<MyConfiguration> {
 
     @Override
-    public void initialize(Bootstrap<AppConfiguration> bootstrap) {
-        GuiceBundle<AppConfiguration> guiceBundle = GuiceBundle.<AppConfiguration>newBuilder()
-                .addModule(new ServerModule()).setConfigClass(AppConfiguration.class)
-                .enableAutoConfig(getClass().getPackage().getName()).build();
-        bootstrap.addBundle(guiceBundle);
-
+    public void initialize(Bootstrap<MyConfiguration> configurationBootstrap) {
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     @Override
-    public void run(final AppConfiguration configuration, final Environment environment) throws Exception {
+    public void run(MyConfiguration configuration, Environment environment) throws Exception {
         final byte[] key = configuration.getJwtTokenSecret();
 
         final JwtConsumer consumer = new JwtConsumerBuilder().setAllowedClockSkewInSeconds(
@@ -68,11 +45,11 @@ public class ReceiptToVoucherService extends Application<AppConfiguration> {
 
         environment.jersey().register(new AuthDynamicFeature(
                 new JwtAuthFilter.Builder<MyUser>().setJwtConsumer(consumer).setRealm("realm").setPrefix("Bearer")
-                        .setAuthenticator(new ReceiptToVoucherService.ExampleAuthenticator()).buildAuthFilter()));
+                        .setAuthenticator(new ExampleAuthenticator()).buildAuthFilter()));
 
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(Principal.class));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
-        //environment.jersey().register(new SecuredResource(configuration.getJwtTokenSecret()));
+        environment.jersey().register(new SecuredResource(configuration.getJwtTokenSecret()));
     }
 
     private static class ExampleAuthenticator implements Authenticator<JwtContext, MyUser> {
@@ -99,5 +76,8 @@ public class ReceiptToVoucherService extends Application<AppConfiguration> {
             }
         }
     }
-    //CHECKSTYLE:ON
+
+    public static void main(String[] args) throws Exception {
+        new JwtAuthApplication().run("server");
+    }
 }
