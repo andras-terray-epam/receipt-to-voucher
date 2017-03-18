@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 /**
- * Created by Andras_Terray on 3/18/2017.
+ * Methods used for authenticating.
  */
 public class UserAuthenticator implements Authenticator<JwtContext, User> {
 

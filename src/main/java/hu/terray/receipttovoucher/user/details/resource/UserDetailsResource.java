@@ -11,6 +11,7 @@ import io.dropwizard.auth.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -43,32 +44,45 @@ public class UserDetailsResource {
         this.userDetailsTransformer = userDetailsTransformer;
     }
 
+    @GET
+    @RolesAllowed({"admin"})
+    @Path("/admin")
+    public String show(@Auth Principal principal) {
+        return "'" + principal.getName() + "' has admin privileges";
+    }
+
     /**
      * Get user by user id endpoint.
      *
-     * @param email email of the seached user.
+     * @param userIdentifier userIdentifier of the seached user.
      * @param principal injected automatically based on the incoming JWT token.
-     * @return User with the related email.
+     * @return User with the related userIdentifier.
      */
     @GET
-    @Path("/{userId}")
+    @Path("/{userIdentifier}")
     @Produces(APPLICATION_JSON)
-    public Response retrieveClubs(@Auth Principal principal, @PathParam("userId") String email) {
+    public Response retrieveClubs(@Auth Principal principal, @PathParam("userIdentifier") String userIdentifier) {
         LOGGER.info("Getting user details request");
-        checkIfUserAuthenticated(principal, email);
+        String email = getEmailIfUserAuthenticated(principal, userIdentifier);
         User user = userDetailsService.getUserDetailsByEmail(email);
         UserDetails userDetails = userDetailsTransformer.transform(user);
         return Response.ok().entity(userDetails).build();
 
     }
 
-    private void checkIfUserAuthenticated(Principal principal, String email) {
-        if (!principal.getName().equals(email)) {
+    private String getEmailIfUserAuthenticated(Principal principal, String userIdentifier) {
+        String emailToSearchFor = principal.getName();
+        if (doesUserRequestOtherUserDetails(userIdentifier) && !principal.getName().equals(userIdentifier)) {
             String exceptionMessage = "User not authenticated to get details. Actual user: " + principal.getName() + ", user to get details about: "
-                    + email;
+                    + userIdentifier;
             LOGGER.warn(exceptionMessage);
             throw new AuthenticationFailedException(exceptionMessage, new AuthenticationException(exceptionMessage));
         }
+        return emailToSearchFor;
+    }
+
+    private boolean doesUserRequestOtherUserDetails(String userIdentifier) {
+        return !"me".equals(userIdentifier);
     }
 
 }

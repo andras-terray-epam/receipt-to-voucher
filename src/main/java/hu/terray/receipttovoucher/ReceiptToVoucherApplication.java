@@ -1,8 +1,9 @@
 package hu.terray.receipttovoucher;
 
 import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
+import com.google.inject.Injector;
 import com.hubspot.dropwizard.guice.GuiceBundle;
-import hu.terray.receipttovoucher.auth.UserAuthenticator;
+import hu.terray.receipttovoucher.auth.AuthUtil;
 import hu.terray.receipttovoucher.user.registration.dao.domain.User;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -25,6 +26,8 @@ public class ReceiptToVoucherApplication extends Application<AppConfiguration> {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(ReceiptToVoucherApplication.class);
 
+    private Injector injector;
+
     /**
      * Entry point of the Receipt to voucher application.
      *
@@ -46,7 +49,7 @@ public class ReceiptToVoucherApplication extends Application<AppConfiguration> {
                 .enableAutoConfig(getClass().getPackage().getName())
                 .build();
         bootstrap.addBundle(guiceBundle);
-
+        injector = guiceBundle.getInjector();
     }
 
     // CHECKSTYLE:OFF
@@ -63,10 +66,12 @@ public class ReceiptToVoucherApplication extends Application<AppConfiguration> {
                 .setRelaxVerificationKeyValidation() // relaxes key length requirement
                 .build(); // create the JwtConsumer instance
 
+        AuthUtil authUtil = injector.getInstance(AuthUtil.class);
         environment.jersey().register(new AuthDynamicFeature(new JwtAuthFilter.Builder<User>().setJwtConsumer(consumer)
                 .setRealm("realm")
                 .setPrefix("Bearer")
-                .setAuthenticator(new UserAuthenticator())
+                .setAuthenticator(authUtil.getJWTAuthenticator())
+                .setAuthorizer(authUtil.getAuthorizer())
                 .buildAuthFilter()));
 
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(Principal.class));
