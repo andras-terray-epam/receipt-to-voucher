@@ -47,6 +47,7 @@ public class UserDetailsResource {
      * Get user by user id endpoint.
      *
      * @param email email of the seached user.
+     * @param principal injected automatically based on the incoming JWT token.
      * @return User with the related email.
      */
     @GET

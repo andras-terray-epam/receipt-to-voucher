@@ -23,16 +23,25 @@ public class TokenFactory {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(TokenFactory.class);
 
-    private static final String SUBJECT = "";
     private static final int EXPIRATION_TIME_IN_MINUTES = 60;
 
     private final AppConfiguration configuration;
 
+    /**
+     * Constructor with necessary dependencies.
+     *
+     * @param configuration dependency.
+     */
     @Inject
     public TokenFactory(AppConfiguration configuration) {
         this.configuration = configuration;
     }
 
+    /**
+     * Created JWT token.
+     * @param subject subject of the created JWT.
+     * @return JWT token as String
+     */
     public String createToken(String subject) {
         final JwtClaims claims = new JwtClaims();
         claims.setSubject(subject);
@@ -42,6 +51,12 @@ public class TokenFactory {
         jws.setPayload(claims.toJson());
         jws.setAlgorithmHeaderValue(HMAC_SHA256);
 
+        tryToSetJWTKey(jws);
+
+        return tryToGetSerializedJwtToken(jws);
+    }
+
+    private void tryToSetJWTKey(JsonWebSignature jws) {
         try {
             jws.setKey(new HmacKey(configuration.getJwtTokenSecret()));
         } catch (UnsupportedEncodingException e) {
@@ -49,7 +64,9 @@ public class TokenFactory {
             LOGGER.error(exceptionMessage);
             throw new SystemException(exceptionMessage, e);
         }
+    }
 
+    private String tryToGetSerializedJwtToken(JsonWebSignature jws) {
         try {
             return jws.getCompactSerialization();
         } catch (JoseException e) {

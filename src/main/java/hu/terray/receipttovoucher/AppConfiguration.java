@@ -13,6 +13,11 @@ public class AppConfiguration extends Configuration {
     @NotEmpty
     private String jwtTokenSecret = "receiptToVoucherJWTsecretToEncryptJWTTokenMessage";
 
+    /**
+     * Gives back the JWT secret to encrypt with.
+     * @return JWT secret.
+     * @throws UnsupportedEncodingException exception thrown if encoding not supported.
+     */
     public byte[] getJwtTokenSecret() throws UnsupportedEncodingException {
         return jwtTokenSecret.getBytes("UTF-8");
     }

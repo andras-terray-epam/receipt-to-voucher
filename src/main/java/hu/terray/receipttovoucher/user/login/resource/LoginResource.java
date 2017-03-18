@@ -1,7 +1,6 @@
 package hu.terray.receipttovoucher.user.login.resource;
 
 import com.google.inject.Inject;
-import hu.terray.receipttovoucher.common.response.ResponseFactory;
 import hu.terray.receipttovoucher.user.login.resource.domain.LoginRequest;
 import hu.terray.receipttovoucher.user.login.service.AuthenticationService;
 import org.slf4j.Logger;
@@ -26,18 +25,14 @@ public class LoginResource {
 
     private final AuthenticationService authenticationService;
 
-    private final ResponseFactory responseFactory;
-
     /**
      * Constructor with necessary dependencies.
      *
      * @param authenticationService dependency.
-     * @param responseFactory       dependency.
      */
     @Inject
-    public LoginResource(final AuthenticationService authenticationService, final ResponseFactory responseFactory) {
+    public LoginResource(final AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
-        this.responseFactory = responseFactory;
     }
 
     /**
