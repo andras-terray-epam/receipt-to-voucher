@@ -41,10 +41,10 @@ public class MongoUserDetailsDao implements Repository<User, String>, UserDetail
     }
 
     @Override
-    public User getUserDetailsById(String userId) {
+    public User getUserDetailsByEmail(String email) {
         User user = null;
         try {
-            user = userCollection.findOne(DBQuery.is("_id", userId));
+            user = userCollection.findOne(DBQuery.is("email", email));
         } catch (final IllegalArgumentException e) {
             LOGGER.warn("Result lookup with enquiryId: {} and tariffId: {} throws an error: {}", e);
         }

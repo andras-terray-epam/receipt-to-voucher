@@ -2,12 +2,15 @@ package hu.terray.receipttovoucher.user.registration.dao.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.security.Principal;
+
 /**
  * DTO to store user on dao level.
  */
-public class User {
+public class User implements Principal {
 
-    @JsonProperty("_id") private String userId;
+    @JsonProperty("_id")
+    private String userId;
     private String firstName;
     private String lastName;
     private String email;
@@ -51,5 +54,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String getName() {
+        return getEmail();
     }
 }

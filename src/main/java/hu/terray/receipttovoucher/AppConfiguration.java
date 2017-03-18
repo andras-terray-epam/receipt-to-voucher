@@ -9,8 +9,9 @@ import java.io.UnsupportedEncodingException;
  * Configuration file for Receipt To Voucher application.
  */
 public class AppConfiguration extends Configuration {
+
     @NotEmpty
-    private String jwtTokenSecret = "dfwzsdzwh823zebdwdz772632gdsbd";
+    private String jwtTokenSecret = "receiptToVoucherJWTsecretToEncryptJWTTokenMessage";
 
     public byte[] getJwtTokenSecret() throws UnsupportedEncodingException {
         return jwtTokenSecret.getBytes("UTF-8");

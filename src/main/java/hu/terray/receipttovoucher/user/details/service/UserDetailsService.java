@@ -26,10 +26,10 @@ public class UserDetailsService {
     /**
      * Get user based on its id.
      *
-     * @param userId id of the user.
-     * @return User related to the id.
+     * @param email email of the user.
+     * @return User related to the email.
      */
-    public User getUserDetailsById(String userId) {
-        return userDetailsDao.getUserDetailsById(userId);
+    public User getUserDetailsByEmail(String email) {
+        return userDetailsDao.getUserDetailsByEmail(email);
     }
 }

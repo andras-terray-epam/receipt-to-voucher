@@ -7,7 +7,7 @@ apply plugin: 'pmd'
 apply plugin: 'findbugs'
 
 description = 'Receipt To Vaucher Service'
-mainClassName = 'hu.terray.receipttovoucher.ReceiptToVoucherService'
+mainClassName = 'hu.terray.receipttovoucher.ReceiptToVoucherApplication'
 
 sourceCompatibility = 1.8
 
