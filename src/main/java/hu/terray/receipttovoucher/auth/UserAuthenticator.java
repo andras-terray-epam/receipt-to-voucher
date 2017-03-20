@@ -1,6 +1,9 @@
 package hu.terray.receipttovoucher.auth;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import hu.terray.receipttovoucher.common.exception.system.badrequest.AuthenticationFailedException;
+import hu.terray.receipttovoucher.user.details.service.UserDetailsService;
 import hu.terray.receipttovoucher.user.registration.dao.domain.User;
 import io.dropwizard.auth.Authenticator;
 import org.jose4j.jwt.MalformedClaimException;
@@ -15,21 +18,25 @@ import java.util.Optional;
 /**
  * Methods used for authenticating.
  */
+@Singleton
 public class UserAuthenticator implements Authenticator<JwtContext, User> {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(UserAuthenticator.class);
 
+    private final UserDetailsService userDetailsService;
+
+    /**
+     * Constructor with necessary dependencies.
+     *
+     * @param userDetailsService     dependency.
+     */
+    @Inject
+    public UserAuthenticator(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
     @Override
     public Optional<User> authenticate(JwtContext context) {
-        // Provide your own implementation to lookup users based on the principal attribute in the
-        // JWT Token. E.g.: lookup users from a database etc.
-        // This method will be called once the token's signature has been verified
-
-        // In case you want to verify different parts of the token you can do that here.
-        // E.g.: Verifying that the provided token has not expired.
-
-        // All JsonWebTokenExceptions will result in a 401 Unauthorized response.
-
         Optional<User> optionalUser = Optional.empty();
         try {
             checkIfTokenExpired(context);
@@ -51,8 +58,7 @@ public class UserAuthenticator implements Authenticator<JwtContext, User> {
 
     private Optional<User> getTokenRelatedUser(JwtContext context) throws MalformedClaimException {
         final String subject = context.getJwtClaims().getSubject();
-        User user = new User();
-        user.setEmail(subject);
+        User user = userDetailsService.getUserDetailsByEmail(subject);
         return Optional.of(user);
     }
 

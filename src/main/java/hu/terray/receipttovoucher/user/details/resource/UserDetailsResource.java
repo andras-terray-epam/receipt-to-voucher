@@ -44,8 +44,14 @@ public class UserDetailsResource {
         this.userDetailsTransformer = userDetailsTransformer;
     }
 
+    /**
+     * Endpoint to check authorization technique.
+     *
+     * @param principal User who calls the endpoint and has to be authorized.
+     * @return forbidden if not authorized, and a plain answer if authorized.
+     */
     @GET
-    @RolesAllowed({"admin"})
+    @RolesAllowed("admin")
     @Path("/admin")
     public String show(@Auth Principal principal) {
         return "'" + principal.getName() + "' has admin privileges";

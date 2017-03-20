@@ -3,7 +3,8 @@ package hu.terray.receipttovoucher;
 import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
 import com.google.inject.Injector;
 import com.hubspot.dropwizard.guice.GuiceBundle;
-import hu.terray.receipttovoucher.auth.AuthUtil;
+import hu.terray.receipttovoucher.auth.UserAuthenticator;
+import hu.terray.receipttovoucher.auth.UserAuthorizer;
 import hu.terray.receipttovoucher.user.registration.dao.domain.User;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -66,12 +67,13 @@ public class ReceiptToVoucherApplication extends Application<AppConfiguration> {
                 .setRelaxVerificationKeyValidation() // relaxes key length requirement
                 .build(); // create the JwtConsumer instance
 
-        AuthUtil authUtil = injector.getInstance(AuthUtil.class);
+        UserAuthenticator userAuthenticator = injector.getInstance(UserAuthenticator.class);
+        UserAuthorizer userAuthorizer = injector.getInstance(UserAuthorizer.class);
         environment.jersey().register(new AuthDynamicFeature(new JwtAuthFilter.Builder<User>().setJwtConsumer(consumer)
                 .setRealm("realm")
                 .setPrefix("Bearer")
-                .setAuthenticator(authUtil.getJWTAuthenticator())
-                .setAuthorizer(authUtil.getAuthorizer())
+                .setAuthenticator(userAuthenticator)
+                .setAuthorizer(userAuthorizer)
                 .buildAuthFilter()));
 
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(Principal.class));
