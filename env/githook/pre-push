@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Git push breaker for MSE-CECT project
+
+FAILED="\e[1m\e[31mFAILED\e[0m"
+SUCCESS="\e[1m\e[32mSUCCESS\e[0m"
+
+header() 
+{
+    clear
+    echo "                   \////"
+    echo "                  ( 0 0 )"
+    echo "----------------ooO-(_)-Ooo-----------------"
+    echo "           git push breaker v0.1"
+    echo ""
+}
+
+footer()
+{
+    echo "--------------------------------------------"
+    echo "                   | | |"
+    echo "                    |||"
+    echo "                  ooO Ooo"
+}
+
+gradle_clean_build()
+{
+    echo -n "  Gradle clean build is running... "
+    cd "content" 2>&1 >/dev/null
+    error_checking `./gradlew clean build | grep "BUILD FAILED" | wc -w`
+    cd - 2>&1 >/dev/null
+}
+
+error_checking()
+{
+    if [ $@ -ne 0 ]; then
+        echo -e $FAILED
+        footer
+        exit 1
+    fi
+    echo -e $SUCCESS
+}
+
+
+header
+gradle_clean_build
+footer

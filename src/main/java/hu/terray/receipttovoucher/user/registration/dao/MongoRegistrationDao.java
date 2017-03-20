@@ -2,7 +2,7 @@ package hu.terray.receipttovoucher.user.registration.dao;
 
 import com.google.inject.Inject;
 import com.mongodb.DuplicateKeyException;
-import hu.terray.receipttovoucher.common.exception.RTVUserCreationFailedException;
+import hu.terray.receipttovoucher.common.exception.system.badrequest.RTVUserCreationFailedException;
 import hu.terray.receipttovoucher.common.mongo.MongoDBCollectionProvider;
 import hu.terray.receipttovoucher.common.mongo.Repository;
 import hu.terray.receipttovoucher.user.registration.dao.domain.User;
@@ -23,11 +23,10 @@ public class MongoRegistrationDao implements Repository<User, String>, Registrat
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MongoRegistrationDao.class);
 
-    private static final String USER_COLLECTION_NAME = "user";
+    static final String USER_COLLECTION_NAME = "user";
 
     private final MongoDBCollectionProvider collectionProvider;
     private final UserTransformer userTransformer;
-
     private JacksonDBCollection<User, String> userCollection;
 
     /**

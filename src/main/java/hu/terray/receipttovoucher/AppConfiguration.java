@@ -1,46 +1,24 @@
 package hu.terray.receipttovoucher;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Configuration file for Receipt To Voucher application.
  */
 public class AppConfiguration extends Configuration {
-    @NotEmpty private String appName;
 
-    @NotEmpty private String template;
+    @NotEmpty
+    private String jwtTokenSecret = "receiptToVoucherJWTsecretToEncryptJWTTokenMessage";
 
-    @NotEmpty private String defaultName = "Stranger";
-
-    @JsonProperty
-    public String getAppName() {
-        return appName;
-    }
-
-    @JsonProperty
-    public void setAppName(final String appName) {
-        this.appName = appName;
-    }
-
-    @JsonProperty
-    public String getTemplate() {
-        return template;
-    }
-
-    @JsonProperty
-    public void setTemplate(String template) {
-        this.template = template;
-    }
-
-    @JsonProperty
-    public String getDefaultName() {
-        return defaultName;
-    }
-
-    @JsonProperty
-    public void setDefaultName(String defaultName) {
-        this.defaultName = defaultName;
+    /**
+     * Gives back the JWT secret to encrypt with.
+     * @return JWT secret.
+     * @throws UnsupportedEncodingException exception thrown if encoding not supported.
+     */
+    public byte[] getJwtTokenSecret() throws UnsupportedEncodingException {
+        return jwtTokenSecret.getBytes("UTF-8");
     }
 }
