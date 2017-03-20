@@ -1,7 +1,7 @@
 #ignore all intellij project related info
 .idea
 .gradle
-build/
+build/*
 
 
 

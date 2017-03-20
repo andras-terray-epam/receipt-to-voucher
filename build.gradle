@@ -7,7 +7,7 @@ apply plugin: 'pmd'
 apply plugin: 'findbugs'
 
 description = 'Receipt To Vaucher Service'
-mainClassName = 'hu.terray.receipttovoucher.ReceiptToVoucherService'
+mainClassName = 'hu.terray.receipttovoucher.ReceiptToVoucherApplication'
 
 sourceCompatibility = 1.8
 
@@ -31,6 +31,7 @@ dependencies {
     compile group: 'com.hubspot.dropwizard', name: 'dropwizard-guice', version: '1.0.0.2'
     compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
     compile group: 'org.mongojack', name: 'mongojack', version: '2.6.1'
+    compile group: 'com.github.toastshaman', name: 'dropwizard-auth-jwt', version: '1.0.2-0'
 }
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'

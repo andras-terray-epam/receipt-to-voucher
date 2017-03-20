@@ -7,10 +7,10 @@ import hu.terray.receipttovoucher.user.registration.dao.domain.User;
  */
 public interface UserDetailsDao {
     /**
-     * Gives back user with the related userId.
+     * Gives back user with the related email.
      *
-     * @param userId id of the user.
-     * @return User with related id.
+     * @param email email of the user.
+     * @return User with related email.
      */
-    User getUserDetailsById(String userId);
+    User getUserDetailsByEmail(String email);
 }
