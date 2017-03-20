@@ -1,5 +1,6 @@
 package hu.terray.receipttovoucher.auth;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import hu.terray.receipttovoucher.common.exception.system.badrequest.AuthenticationFailedException;
 import hu.terray.receipttovoucher.user.details.service.UserDetailsService;
@@ -39,6 +40,7 @@ public class AuthUtil {
         USER_AND_ROLE_MAP.put("superAdmin", "superAdmin@superadmin.com");
     }
 
+    @Inject
     public AuthUtil(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
