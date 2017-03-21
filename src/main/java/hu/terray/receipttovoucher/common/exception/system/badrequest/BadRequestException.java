@@ -11,6 +11,15 @@ public class BadRequestException extends SystemException {
      * Message and cause are mandatory fields.
      *
      * @param message Exception message.
+     */
+    public BadRequestException(String message) {
+        super(message);
+    }
+
+    /**
+     * Message and cause are mandatory fields.
+     *
+     * @param message Exception message.
      * @param cause   Cause exception.
      */
     public BadRequestException(String message, Throwable cause) {

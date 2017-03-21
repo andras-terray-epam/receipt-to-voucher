@@ -9,6 +9,15 @@ public class AuthenticationFailedException extends BadRequestException {
      * Message and cause exception are mandatory fields.
      *
      * @param message Exception message.
+     */
+    public AuthenticationFailedException(String message) {
+        super(message);
+    }
+
+    /**
+     * Message and cause exception are mandatory fields.
+     *
+     * @param message Exception message.
      * @param cause   Cause exception.
      */
     public AuthenticationFailedException(String message, Throwable cause) {

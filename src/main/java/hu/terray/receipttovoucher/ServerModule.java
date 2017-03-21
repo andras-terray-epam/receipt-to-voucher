@@ -3,6 +3,8 @@ package hu.terray.receipttovoucher;
 import com.google.inject.AbstractModule;
 import hu.terray.receipttovoucher.common.uuid.DefaultUUIDGenerator;
 import hu.terray.receipttovoucher.common.uuid.UUIDGenerator;
+import hu.terray.receipttovoucher.user.delete.dao.MongoUserDeletionDao;
+import hu.terray.receipttovoucher.user.delete.dao.UserDeletionDao;
 import hu.terray.receipttovoucher.user.details.dao.MongoUserDetailsDao;
 import hu.terray.receipttovoucher.user.details.dao.UserDetailsDao;
 import hu.terray.receipttovoucher.user.login.dao.AuthenticationDao;
@@ -24,5 +26,6 @@ public class ServerModule extends AbstractModule {
         bind(UserDetailsDao.class).to(MongoUserDetailsDao.class);
         bind(RegistrationDao.class).to(MongoRegistrationDao.class);
         bind(AuthenticationDao.class).to(MongoAuthenticationDao.class);
+        bind(UserDeletionDao.class).to(MongoUserDeletionDao.class);
     }
 }
