@@ -7,7 +7,6 @@ import hu.terray.receipttovoucher.user.details.resource.transformer.UserDetailsT
 import hu.terray.receipttovoucher.user.details.service.UserDetailsService;
 import hu.terray.receipttovoucher.user.registration.dao.domain.User;
 import io.dropwizard.auth.Auth;
-import io.dropwizard.auth.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,7 +81,7 @@ public class UserDetailsResource {
             String exceptionMessage = "User not authenticated to get details. Actual user: " + principal.getName() + ", user to get details about: "
                     + userIdentifier;
             LOGGER.warn(exceptionMessage);
-            throw new AuthenticationFailedException(exceptionMessage, new AuthenticationException(exceptionMessage));
+            throw new AuthenticationFailedException(exceptionMessage);
         }
         return emailToSearchFor;
     }
