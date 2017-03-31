@@ -5,7 +5,6 @@ import hu.terray.receipttovoucher.common.exception.system.badrequest.Authenticat
 import hu.terray.receipttovoucher.common.mongo.MongoDBCollectionProvider;
 import hu.terray.receipttovoucher.common.mongo.Repository;
 import hu.terray.receipttovoucher.user.registration.dao.domain.User;
-import io.dropwizard.auth.AuthenticationException;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
 import org.slf4j.Logger;
@@ -61,7 +60,7 @@ public class MongoAuthenticationDao implements AuthenticationDao, Repository<Use
         if (user == null) {
             String exceptionMessage = USER_CANNOT_BE_FOUND + email;
             LOGGER.warn(exceptionMessage);
-            throw new AuthenticationFailedException(exceptionMessage, new AuthenticationException(exceptionMessage));
+            throw new AuthenticationFailedException(exceptionMessage);
         }
     }
 }

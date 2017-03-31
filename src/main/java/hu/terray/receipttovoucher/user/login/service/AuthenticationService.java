@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import hu.terray.receipttovoucher.auth.token.TokenFactory;
 import hu.terray.receipttovoucher.common.exception.system.badrequest.AuthenticationFailedException;
 import hu.terray.receipttovoucher.user.login.dao.AuthenticationDao;
-import io.dropwizard.auth.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +37,7 @@ public class AuthenticationService {
         if (!authenticationDao.areLoginCredentialsValid(email, password)) {
             String exceptionMessage = "User credentials are not valid for email: " + email;
             LOGGER.warn(exceptionMessage);
-            throw new AuthenticationFailedException(exceptionMessage, new AuthenticationException(exceptionMessage));
+            throw new AuthenticationFailedException(exceptionMessage);
         } else {
             return tokenFactory.createToken(email);
         }

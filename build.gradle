@@ -25,8 +25,10 @@ repositories {
 }
 
 dependencies {
+    testCompile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.2'
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
+    testCompile 'io.rest-assured:json-schema-validator:3.0.2'
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: '1.0.6'
     compile group: 'com.hubspot.dropwizard', name: 'dropwizard-guice', version: '1.0.0.2'
     compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
@@ -74,4 +76,8 @@ allprojects {
             options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
         }
     }
+}
+
+test {
+    classpath = project.sourceSets.test.runtimeClasspath + files("$rootProject.projectDir/src/resource")
 }
